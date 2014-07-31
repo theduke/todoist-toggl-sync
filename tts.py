@@ -132,7 +132,6 @@ class TogglApi(object):
 		for entry in entries:
 			if not 'pid' in entry:
 				# Non-project related time entry, so skip it.
-				pprint(entry)
 				continue
 			data['projects'][entry['pid']]['time_entries'].append(entry)
 
