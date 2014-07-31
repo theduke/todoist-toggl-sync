@@ -130,6 +130,10 @@ class TogglApi(object):
 
 		entries = raw['time_entries'] if 'time_entries' in raw else []
 		for entry in entries:
+			if not 'pid' in entry:
+				# Non-project related time entry, so skip it.
+				pprint(entry)
+				continue
 			data['projects'][entry['pid']]['time_entries'].append(entry)
 
 		return data
@@ -148,6 +152,10 @@ class TogglApi(object):
 		proj['time_entries'] = []
 
 		return proj
+
+	def update_project(self, id, data):
+		data = {'project': data}
+		return self.post('projects/' + str(id), data=json.dumps(data))
 
 	def create_time_entry(self, description, duration, pid, start=None):
 		start = start or datetime.datetime.now().isoformat() + 'Z'
@@ -185,6 +193,12 @@ class TogglApi(object):
 
 		project = toggle_projects[0] if len(toggle_projects)\
 							else self.create_project(todo_project['name'])
+
+		# Synconize the "archived" state.
+		if bool(todo_project['is_archived']) == project['active']:
+			# Todoist and Toggl status are not the same.
+			# Update toggle.
+			self.update_project(project['id'], {'active': not bool(todo_project['is_archived'])})
 
 		# For each todoist task, check if a time entry already exists.
 		# Otherwise create time entry with 0 seconds.
