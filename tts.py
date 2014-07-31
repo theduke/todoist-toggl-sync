@@ -232,7 +232,7 @@ def run_sync(todoist_email, todoist_pw, toggl_email, toggl_pw):
 if __name__ == '__main__':
 	args = sys.argv[1:]
 	
-	if not len(args):
+	if not len(args) or not (args[0] in ['sync']):
 		print("Usage: tts CMD")	
 		print("    sync email-todoist pw-todoist [email-toggl pw-toggl]")
 		sys.exit(1)
@@ -248,3 +248,4 @@ if __name__ == '__main__':
 			pw_toggl = args.pop(0)
 
 		run_sync(email_todoist, pw_todoist, email_toggl, pw_toggl)
+
