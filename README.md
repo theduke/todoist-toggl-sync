@@ -12,7 +12,7 @@ The only requirement is python and the python requests library.
 
 To use this, all you have to do is run tts.py regularily like this:
 
-`python tts.py TODOIST_EMAIL TODOIST_PW TOGGL_EMAIL TOGGL_PW`
+`python tts.py sync TODOIST_EMAIL TODOIST_PW TOGGL_EMAIL TOGGL_PW`
 
 
 Setup
@@ -28,7 +28,7 @@ Setup
 * Set up a cronjob to run the sync every 10 minutes on a Linux server:
   `crontab -e`
   Add the line
-  `*/10 * * * * /PATH/TO/TTS/tts.py TODOIST_EMAIL TODOIST_PW TOGGL_EMAIL TOGGL_PW`
+  `*/10 * * * * /PATH/TO/TTS/tts.py sync TODOIST_EMAIL TODOIST_PW TOGGL_EMAIL TOGGL_PW`
   Save the file
 * Done, your new Todoist tasks will automatically show up in Toggl.
 
